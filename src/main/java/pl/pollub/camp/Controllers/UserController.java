@@ -1,6 +1,7 @@
 package pl.pollub.camp.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.pollub.camp.Models.Role;
@@ -27,6 +28,21 @@ public class UserController {
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Users> getAllUsers(){
         return userRepository.findAll();
+    }
+    @DeleteMapping(path = "/delete")
+    public @ResponseBody String deleteUser(@RequestParam int id){
+        userRepository.deleteById(id);
+        return "User succesfully deleted";
+    }
+    @PatchMapping(path = "/update")
+    public @ResponseBody String updateUser(@RequestParam(required = false) String name, @RequestParam int id){
+        Users u = userRepository.findById(id).orElse(null);
+        if(u!=null){
+            u.setName(name);
+            userRepository.save(u);
+            return u.getName();
+        }
+        return "User not found";
     }
 
 }
