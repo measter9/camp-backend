@@ -3,26 +3,27 @@ package pl.pollub.camp.Models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.sql.Date;
 
-@Getter
+enum InspectionType{
+    INSCPECTION,
+    OIL,
+    OTHER
+}
+
 @Entity
-public class Users {
+@Getter
+public class Inspections {
     @Id
     @GeneratedValue
-    private Integer id;
+    private int Id;
     @Setter
     private String name;
     @Setter
-    private String email;
+    private InspectionType inspectionType;
     @Setter
-    private String password;
-    @Setter @Getter
-    private Role role;
-    @OneToMany
-    List<Orders> ordersList;
+    private Date ValidUntil;
 }

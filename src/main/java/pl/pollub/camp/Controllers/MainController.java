@@ -3,6 +3,7 @@ package pl.pollub.camp.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import pl.pollub.camp.Models.Role;
 import pl.pollub.camp.Repositories.UserRepository;
 import pl.pollub.camp.Models.Users;
 
@@ -18,7 +19,7 @@ public class MainController {
         u.setName(name);
         u.setPassword(password);
         u.setEmail(email);
-
+        u.setRole(Role.CUSTOMER);
         userRepository.save(u);
         return "User succesfully created";
     }

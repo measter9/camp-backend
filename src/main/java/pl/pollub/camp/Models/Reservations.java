@@ -3,26 +3,30 @@ package pl.pollub.camp.Models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+enum ReservationType{
+
+}
 @Entity
-public class Users {
+@Getter
+public class Reservations {
     @Id
     @GeneratedValue
-    private Integer id;
+    private int Id;
     @Setter
-    private String name;
+    private Date Start;
     @Setter
-    private String email;
+    private Date End;
     @Setter
-    private String password;
-    @Setter @Getter
-    private Role role;
-    @OneToMany
-    List<Orders> ordersList;
+    private String Location;
+    @OneToOne
+    private Orders Order;
+
 }
