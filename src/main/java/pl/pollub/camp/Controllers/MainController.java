@@ -40,6 +40,7 @@ public class MainController {
     @PostMapping(path = "/addOrder")
     public @ResponseBody String addOrder(@RequestParam String commnet, @RequestParam int userId){
         Users u = userRepository.findById(userId).orElse(null);
+
         Orders o = new Orders();
         o.setComment(commnet);
         o.setOrderStatus(OrderStatus.PENDING);
