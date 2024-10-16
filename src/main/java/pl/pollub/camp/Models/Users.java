@@ -23,6 +23,7 @@ public class Users {
     private String password;
     @Setter @Getter
     private Role role;
+    @Setter
     @OneToMany
     List<Orders> ordersList;
 }
