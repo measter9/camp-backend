@@ -1,5 +1,15 @@
 package pl.pollub.camp.Controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -7,18 +17,28 @@ import org.springframework.web.bind.annotation.*;
 import pl.pollub.camp.Models.Role;
 import pl.pollub.camp.Repositories.UserRepository;
 import pl.pollub.camp.Models.Users;
+import pl.pollub.camp.Services.JwtService;
+
+import java.util.Optional;
+import java.util.SimpleTimeZone;
 
 @Controller
 @RequestMapping(path = "/user")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    private PasswordEncoder encoder;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtService jwtService;
 
     @PostMapping(path = "/add")
     public @ResponseBody String addUser(@RequestParam String name, @RequestParam String password, @RequestParam String email){
         Users u = new Users();
         u.setName(name);
-        u.setPassword(password);
+        u.setPassword(encoder.encode(password));
+
         u.setEmail(email);
         u.setRole(Role.CUSTOMER);
         userRepository.save(u);
@@ -26,8 +46,12 @@ public class UserController {
     }
 
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<Users> getAllUsers(){
-        return userRepository.findAll();
+    public @ResponseBody Iterable<Users> getAllUsers(HttpServletRequest request){
+        if(request.getAttribute("Role") == Role.ADMIN)
+            return userRepository.findAll();
+
+        return null;
+
     }
     @DeleteMapping(path = "/delete")
     public @ResponseBody String deleteUser(@RequestParam int id){
@@ -44,5 +68,4 @@ public class UserController {
         }
         return "User not found";
     }
-
 }
