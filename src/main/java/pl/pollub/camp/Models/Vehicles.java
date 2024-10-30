@@ -20,7 +20,6 @@ public class Vehicles {
     @Getter
     private String Description;
     @Getter
-
     @Setter
     private VehicleStatus vehicleStatus;
     @Getter
@@ -33,6 +32,8 @@ public class Vehicles {
     List<Services> servicesList;
     @OneToMany
     List<Inspections> inspectionsList;
+    @OneToMany
+    List<Reservations> reservationsList;
 
 
 }
