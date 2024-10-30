@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.pollub.camp.Models.Role;
@@ -25,10 +27,7 @@ import java.util.SimpleTimeZone;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
-
-
     private PasswordEncoder encoder;
-
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -39,6 +38,7 @@ public class UserController {
         Users u = new Users();
         u.setName(name);
         u.setPassword(encoder.encode(password));
+
         u.setEmail(email);
         u.setRole(Role.CUSTOMER);
         userRepository.save(u);
@@ -51,6 +51,7 @@ public class UserController {
             return userRepository.findAll();
 
         return null;
+
     }
     @DeleteMapping(path = "/delete")
     public @ResponseBody String deleteUser(@RequestParam int id){
@@ -67,7 +68,4 @@ public class UserController {
         }
         return "User not found";
     }
-
-
-
 }
