@@ -28,5 +28,6 @@ public class Reservations {
     private String Location;
     @OneToOne
     private Orders Order;
-
+    @ManyToOne
+    private Vehicles Vehicle;
 }
