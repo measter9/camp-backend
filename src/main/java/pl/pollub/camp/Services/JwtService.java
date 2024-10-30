@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import pl.pollub.camp.Models.Role;
 import pl.pollub.camp.Models.Users;
 
 import javax.crypto.SecretKey;
@@ -28,7 +29,6 @@ public class JwtService {
     private long jwtExpiration;
 
     public String createToken(String username){
-
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))

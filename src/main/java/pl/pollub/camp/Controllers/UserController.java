@@ -1,5 +1,6 @@
 package pl.pollub.camp.Controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,8 +46,11 @@ public class UserController {
     }
 
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<Users> getAllUsers(){
-        return userRepository.findAll();
+    public @ResponseBody Iterable<Users> getAllUsers(HttpServletRequest request){
+        if(request.getAttribute("Role") == Role.ADMIN)
+            return userRepository.findAll();
+
+        return null;
     }
     @DeleteMapping(path = "/delete")
     public @ResponseBody String deleteUser(@RequestParam int id){

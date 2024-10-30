@@ -1,13 +1,11 @@
 package pl.pollub.camp.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -22,10 +20,10 @@ public class Users {
     private String name;
     @Setter @NonNull
     private String email;
-    @Setter @NonNull
+    @Setter @NonNull @JsonIgnore
     private String password;
     @Setter @Getter
-    private Role role;
+    private Role role = Role.CUSTOMER;
     @Setter
     @OneToMany
     List<Orders> ordersList;
