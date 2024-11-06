@@ -5,12 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
-enum ReservationType {
-    ORDER
-}
 
 @Entity
 @Getter
@@ -19,9 +14,9 @@ public class Reservations {
     @GeneratedValue
     private int Id;
     @Setter
-    private Date Start;
+    private Date start;
     @Setter
-    private Date End;
+    private Date end;
     @Setter
     private String Location;
     @Setter

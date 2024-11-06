@@ -9,12 +9,6 @@ import lombok.Setter;
 
 import java.sql.Date;
 
-enum InspectionType{
-    INSCPECTION,
-    OIL,
-    OTHER
-}
-
 @Entity
 @Getter
 public class Inspections {

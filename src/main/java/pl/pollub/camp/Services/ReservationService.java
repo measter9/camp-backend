@@ -8,11 +8,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import pl.pollub.camp.Models.*;
+import pl.pollub.camp.Models.DTO.FilterVehiclesRequset;
 import pl.pollub.camp.Models.DTO.ReservationRequest;
 import pl.pollub.camp.Repositories.OrderRepository;
 import pl.pollub.camp.Repositories.ReservationRepository;
 import pl.pollub.camp.Repositories.UserRepository;
 import pl.pollub.camp.Repositories.VehicleRepository;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @NoArgsConstructor
@@ -49,5 +54,15 @@ public class ReservationService {
         }
 
         return "Could not find user or vehicle";
+    }
+
+    public Iterable<Vehicles> showAvailableCampers(@RequestBody FilterVehiclesRequset filterVehiclesRequset){
+        Iterable<Reservations> reservations =  reservationRepository.findByStartBetweenAndEndBetween(filterVehiclesRequset.getBegining(), filterVehiclesRequset.getEnd(), filterVehiclesRequset.getBegining(), filterVehiclesRequset.getEnd());
+        List<Integer> occupiedVehiclesIds = new ArrayList<>();
+        for(Reservations r : reservations){
+            occupiedVehiclesIds.add(r.getVehicle().getId());
+        }
+        Iterable<Vehicles> availableVehicles = vehicleRepository.findByIdNotIn(occupiedVehiclesIds);
+        return availableVehicles;
     }
 }

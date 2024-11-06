@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.pollub.camp.Models.DTO.FilterVehiclesRequset;
 import pl.pollub.camp.Models.DTO.ReservationRequest;
 import pl.pollub.camp.Models.Orders;
 import pl.pollub.camp.Models.Reservations;
+import pl.pollub.camp.Models.Vehicles;
 import pl.pollub.camp.Repositories.ReservationRepository;
 import pl.pollub.camp.Services.ReservationService;
 
@@ -30,4 +32,10 @@ public class ReservationController {
     public @ResponseBody Iterable<Reservations> showAllReservations(){
         return reservationRepository.findAll();
     }
+
+    @GetMapping(path = "/find")
+    public @ResponseBody Iterable<Vehicles> showAvailableVehicles(@RequestBody FilterVehiclesRequset filterVehiclesRequset){
+        return reservationService.showAvailableCampers(filterVehiclesRequset);
+    }
 }
+
