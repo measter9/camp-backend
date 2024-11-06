@@ -1,6 +1,6 @@
 package pl.pollub.camp.Models;
 
-enum InspectionType {
+public enum InspectionType{
     INSCPECTION,
     OIL,
     OTHER

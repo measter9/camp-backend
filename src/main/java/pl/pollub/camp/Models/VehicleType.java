@@ -1,11 +1,10 @@
 package pl.pollub.camp.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,7 +17,7 @@ public class VehicleType {
     @Setter
     private String Name;
     @Setter
-    @OneToOne
-    private Vehicles vehicle;
+    @OneToMany
+    List <Vehicles> vehiclesList;
 
 }
