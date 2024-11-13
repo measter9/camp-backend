@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.pollub.camp.Models.Vehicles;
-import pl.pollub.camp.Models.VehicleStatus;
 import pl.pollub.camp.Services.VehicleService;
-import pl.pollub.camp.Repositories.VehicleRepository;
 import pl.pollub.camp.Models.DTO.VehicleRequest;
 
 @Controller
@@ -15,14 +13,16 @@ import pl.pollub.camp.Models.DTO.VehicleRequest;
 public class VehicleController {
     @Autowired
     private VehicleService vehicleService;
-    @PostMapping(path = "/addVehicle")
+
+    @PostMapping(path = "/add")
     public @ResponseBody String addVehicle(@RequestBody VehicleRequest vehicleRequest) {
         try {
-            return vehicleService.addVehicle(null, vehicleRequest);
+            return vehicleService.addVehicle(vehicleRequest);
         } catch (IllegalArgumentException e) {
             return e.getMessage();
         }
     }
+
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Vehicles> getAllVehicles() {
         return vehicleService.getAllVehicles();
@@ -37,7 +37,6 @@ public class VehicleController {
         }
     }
 
-
     @PatchMapping(path = "/update")
     public @ResponseBody String updateVehicle(@RequestParam int id, @RequestBody VehicleRequest updatedVehicleRequest) {
         try {
@@ -48,5 +47,3 @@ public class VehicleController {
         }
     }
 }
-
-

@@ -13,7 +13,7 @@ import java.sql.Date;
 public class Prices {
     @Id
     @GeneratedValue
-    private int Id;
+    private int id;
     @Setter
     private Double Price;
     @Setter

@@ -12,12 +12,11 @@ import java.util.List;
 public class Vehicles {
     @Id
     @GeneratedValue
-    private int Id;
+    private int id;
     private String name;
     private String Description;
     private VehicleStatus vehicleStatus;
     private String Comment;
     @OneToOne
-    private VehicleType vehicleTypeList;
-
+    private VehicleType vehicleType;
 }
