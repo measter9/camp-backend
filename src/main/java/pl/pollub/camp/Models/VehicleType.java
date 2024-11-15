@@ -7,17 +7,13 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Getter
+@Getter@Setter
 public class VehicleType {
     @Id
     @GeneratedValue
-    private int Id;
-    @Setter
+    private int id;
     private String Description;
-    @Setter
     private String Name;
-    @Setter
-    @OneToMany
-    List <Vehicles> vehiclesList;
+    private Integer vehicleId;
 
 }

@@ -24,6 +24,7 @@ public class AuthService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void register(RegisterRequest registerRequest){
+        ///TODO dodać unikanosc nazw uzytkownikow
         Users u = new Users(registerRequest.getUsername(),
                 registerRequest.getEmail(),
                 bCryptPasswordEncoder.encode(registerRequest.getPassword()));

@@ -14,5 +14,6 @@ public class VehicleRequest {
         private VehicleStatus vehicleStatus;
         private String Comment;
         @OneToOne
-        private VehicleType vehicleTypeList;
+        private VehicleType vehicleType;
+
 }
