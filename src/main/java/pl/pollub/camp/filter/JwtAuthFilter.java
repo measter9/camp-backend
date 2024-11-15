@@ -63,6 +63,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         Users u = userRepository.findByName(username).orElse(null);
         assert u != null;
         request.setAttribute("Role",u.getRole());
+        request.setAttribute("Username",u.getName());
 
         filterChain.doFilter(request, response);
     }

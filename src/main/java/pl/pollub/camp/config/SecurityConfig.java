@@ -23,7 +23,8 @@ public class SecurityConfig {
     private static final String[] AUTH_WHITELIST = {
             "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/auth/**"
+            "/auth/**",
+            "/reservation/find"
     };// lista dozwolonych enpointów dla niezalogowanych
 
     @Bean

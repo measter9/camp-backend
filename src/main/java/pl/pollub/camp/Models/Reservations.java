@@ -1,19 +1,12 @@
 package pl.pollub.camp.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
-enum ReservationType{
 
-}
 @Entity
 @Getter
 public class Reservations {
@@ -21,13 +14,16 @@ public class Reservations {
     @GeneratedValue
     private int Id;
     @Setter
-    private Date Start;
+    private Date start;
     @Setter
-    private Date End;
+    private Date end;
     @Setter
     private String Location;
+    @Setter
     @OneToOne
     private Orders Order;
+    @Setter
     @ManyToOne
-    private Vehicles Vehicle;
+    private Vehicles vehicle;
+
 }
