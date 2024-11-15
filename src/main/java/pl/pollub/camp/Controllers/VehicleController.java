@@ -1,6 +1,7 @@
 package pl.pollub.camp.Controllers;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +14,15 @@ import pl.pollub.camp.Models.DTO.VehicleRequest;
 
 @Controller
 @RequestMapping(path = "/vehicle")
+@CrossOrigin
 public class VehicleController {
     @Autowired
     private VehicleService vehicleService;
 
     @PostMapping(path = "/add")
-    public @ResponseBody String addVehicle(@RequestBody VehicleRequest vehicleRequest) {
+    public @ResponseBody String addVehicle(HttpServletRequest httpServletRequest, @RequestBody VehicleRequest vehicleRequest) {
         try {
-            return vehicleService.addVehicle(vehicleRequest);
+            return vehicleService.addVehicle(httpServletRequest,vehicleRequest);
         } catch (IllegalArgumentException e) {
             return e.getMessage();
         }
