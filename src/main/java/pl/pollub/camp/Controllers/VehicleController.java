@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.pollub.camp.Models.Vehicles;
 import pl.pollub.camp.Services.VehicleService;
+import pl.pollub.camp.Models.VehicleStatus;
+import pl.pollub.camp.Services.VehicleService;
+import pl.pollub.camp.Repositories.VehicleRepository;
 import pl.pollub.camp.Models.DTO.VehicleRequest;
 
 @Controller
@@ -22,7 +25,6 @@ public class VehicleController {
             return e.getMessage();
         }
     }
-
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Vehicles> getAllVehicles() {
         return vehicleService.getAllVehicles();
@@ -47,3 +49,4 @@ public class VehicleController {
         }
     }
 }
+

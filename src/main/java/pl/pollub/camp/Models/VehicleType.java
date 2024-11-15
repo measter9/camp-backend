@@ -15,4 +15,5 @@ public class VehicleType {
     private String Description;
     private String Name;
     private Integer vehicleId;
+
 }
