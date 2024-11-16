@@ -8,12 +8,11 @@ import pl.pollub.camp.Models.*;
 import java.util.List;
 @Getter@Setter
 public class VehicleRequest {
-        private int Id;
         private String name;
         private String Description;
         private VehicleStatus vehicleStatus;
         private String Comment;
-        @OneToOne
-        private VehicleType vehicleType;
+        private String imageLink;
+        private int vehicleTypeId;
 
 }

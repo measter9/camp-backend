@@ -8,6 +8,6 @@ public class ReservationRequest {
     int vehicleId;
     Date reservationStartDate;
     Date reservationEndDate;
-    String Location;
+    String location;
     String comments;
 }

@@ -14,9 +14,12 @@ import pl.pollub.camp.Models.Vehicles;
 import pl.pollub.camp.Repositories.ReservationRepository;
 import pl.pollub.camp.Services.ReservationService;
 
+import java.sql.Date;
+
 @RestController
 @RequestMapping(path = "/reservation")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ReservationController {
     private final ReservationService reservationService;
     @Autowired
@@ -27,15 +30,34 @@ public class ReservationController {
     public ResponseEntity<String> makeReservation(HttpServletRequest httpServletRequest, @RequestBody ReservationRequest reservationRequest){
         return ResponseEntity.ok(reservationService.makeReservation(httpServletRequest,reservationRequest));
     }
-    @GetMapping
+    @GetMapping(path = "/all")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
     public @ResponseBody Iterable<Reservations> showAllReservations(){
         return reservationRepository.findAll();
     }
 
     @GetMapping(path = "/find")
-    public @ResponseBody Iterable<Vehicles> showAvailableVehicles(@RequestBody FilterVehiclesRequset filterVehiclesRequset){
-        return reservationService.showAvailableCampers(filterVehiclesRequset);
+    public @ResponseBody Iterable<Vehicles> showAvailableVehicles(@RequestParam Date begining, @RequestParam Date end){
+        FilterVehiclesRequset f = new FilterVehiclesRequset(begining,end  );
+        return reservationService.showAvailableCampers(f);
     }
+    @GetMapping(path = "/{id}")
+    public @ResponseBody Iterable<Reservations> showUserReservations(@PathVariable int id){
+        return reservationService.showUserReservations(id);
+    }
+    @DeleteMapping(path = "/{id}")
+    public @ResponseBody String deleteReservation(HttpServletRequest httpServletRequest, @PathVariable int id){
+        return reservationService.removeReservation(httpServletRequest,id);
+    }
+
+    @GetMapping(path = "/accept/{id}")
+    public @ResponseBody String acceptReservation(@PathVariable int id){
+        return reservationService.acceptReservation(id);
+    }
+    @GetMapping(path = "/cancel/{id}")
+    public @ResponseBody String cancelReservation(@PathVariable int id){
+        return reservationService.cancelReservation(id);
+    }
+
 }
 

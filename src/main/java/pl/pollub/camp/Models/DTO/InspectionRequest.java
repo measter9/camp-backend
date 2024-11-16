@@ -20,6 +20,8 @@ public class InspectionRequest {
     @Future
     private Date validUntil;
     @NotNull
+    private Date startDate;
+    @NotNull
     private Integer vehicleId;
 }
 

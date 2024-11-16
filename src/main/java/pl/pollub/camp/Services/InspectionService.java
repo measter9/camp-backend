@@ -30,6 +30,7 @@ public class InspectionService {
             inspection.setName(inspectionRequest.getName());
             inspection.setInspectionType(inspectionRequest.getInspectionType());
             inspection.setValidUntil(inspectionRequest.getValidUntil());
+            inspection.setStartDate(inspectionRequest.getStartDate());
             inspection.setVehicle(vehicle);
             inspectionRepository.save(inspection);
             return "Inspection added successfully";

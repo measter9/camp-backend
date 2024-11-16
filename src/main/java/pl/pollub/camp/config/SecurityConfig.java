@@ -1,6 +1,8 @@
 package pl.pollub.camp.config;
 
+import org.springframework.security.config.Customizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import pl.pollub.camp.Models.Role;
 import pl.pollub.camp.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,34 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/auth/**",
             "/reservation/find",
-            "/vehicle/all"
+            "/vehicle/all",
+            "/vehicle/id/**",
+            "/prices/find"
     };// lista dozwolonych enpointów dla niezalogowanych
+
+    private static final String[] ADMIN_ENDPOINTS = {
+            "/vehicle/delete/**",
+            "/vehicle/add",
+            "/vehicle/update/**",
+            "/vehicle-type/**",
+            "/user/**",
+            "/reservation/all",
+            "/reservation/cancel/**",
+            "/reservation/accept/**",
+            "/prices/add",
+            "/prices/update",
+            "/prices/all",
+            "/princes/delete",
+            "/order/**",
+            "/inspection/**"
+    };//  lista endpointów dla admina
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(admin -> admin
+                        .requestMatchers(ADMIN_ENDPOINTS).hasRole(Role.ADMIN.toString()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .anyRequest().authenticated()
@@ -39,7 +62,8 @@ public class SecurityConfig {
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // No sessions
                 )
-                .addFilterBefore(authfilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
+                .addFilterBefore(authfilter, UsernamePasswordAuthenticationFilter.class)// Add JWT filter
+                .cors(Customizer.withDefaults());
 
         return http.build();
     }

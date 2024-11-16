@@ -12,6 +12,8 @@ import pl.pollub.camp.Services.VehicleService;
 import pl.pollub.camp.Repositories.VehicleRepository;
 import pl.pollub.camp.Models.DTO.VehicleRequest;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping(path = "/vehicle")
 @CrossOrigin
@@ -31,9 +33,13 @@ public class VehicleController {
     public @ResponseBody Iterable<Vehicles> getAllVehicles() {
         return vehicleService.getAllVehicles();
     }
+    @GetMapping(path = "/id/{id}")
+    public @ResponseBody Optional<Vehicles> getVehicleById(@PathVariable int id){
+        return vehicleService.getById(id);
+    }
 
-    @DeleteMapping(path = "/delete")
-    public @ResponseBody String deleteVehicle(@RequestParam int id) {
+    @DeleteMapping(path = "/delete/{id}")
+    public @ResponseBody String deleteVehicle(@PathVariable int id) {
         try {
             return vehicleService.deleteVehicle(id);
         } catch (EntityNotFoundException e) {
@@ -41,8 +47,8 @@ public class VehicleController {
         }
     }
 
-    @PatchMapping(path = "/update")
-    public @ResponseBody String updateVehicle(@RequestParam int id, @RequestBody VehicleRequest updatedVehicleRequest) {
+    @PatchMapping(path = "/update/{id}")
+    public @ResponseBody String updateVehicle(@PathVariable int id, @RequestBody VehicleRequest updatedVehicleRequest) {
         try {
             Vehicles updatedVehicle = vehicleService.updateVehicle(id, updatedVehicleRequest);
             return "Vehicle updated: " + updatedVehicle.getName();

@@ -1,7 +1,12 @@
 package pl.pollub.camp.Models;
 
 public enum InspectionType{
-    INSCPECTION,
+    INSPECTION,
     OIL,
-    OTHER
+    OTHER,
+    Assistance,
+    NNW,
+    AC,
+    OC
+
 }
