@@ -9,6 +9,8 @@ import pl.pollub.camp.Models.DTO.VehicleRequest;
 import pl.pollub.camp.Models.Vehicles;
 import pl.pollub.camp.Repositories.VehicleRepository;
 
+import java.util.Optional;
+
 @Service
 @NoArgsConstructor
 public class VehicleService {
@@ -56,4 +58,7 @@ public class VehicleService {
         return vehicleRepository.findAll();
     }
 
+    public Optional<Vehicles> getById(int id) {
+        return vehicleRepository.findById(id);
+    }
 }

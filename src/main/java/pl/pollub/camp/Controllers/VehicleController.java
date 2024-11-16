@@ -12,6 +12,8 @@ import pl.pollub.camp.Services.VehicleService;
 import pl.pollub.camp.Repositories.VehicleRepository;
 import pl.pollub.camp.Models.DTO.VehicleRequest;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping(path = "/vehicle")
 @CrossOrigin
@@ -30,6 +32,10 @@ public class VehicleController {
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Vehicles> getAllVehicles() {
         return vehicleService.getAllVehicles();
+    }
+    @GetMapping(path = "/{id}")
+    public @ResponseBody Optional<Vehicles> getVehicleById(@PathVariable int id){
+        return vehicleService.getById(id);
     }
 
     @DeleteMapping(path = "/delete")

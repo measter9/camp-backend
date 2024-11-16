@@ -17,6 +17,7 @@ import pl.pollub.camp.Services.ReservationService;
 @RestController
 @RequestMapping(path = "/reservation")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ReservationController {
     private final ReservationService reservationService;
     @Autowired

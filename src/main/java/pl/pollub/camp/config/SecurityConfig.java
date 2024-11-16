@@ -1,5 +1,6 @@
 package pl.pollub.camp.config;
 
+import org.springframework.security.config.Customizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.pollub.camp.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,8 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/auth/**",
             "/reservation/find",
-            "/vehicle/all"
+            "/vehicle/all",
+            "/vehicle/0"
     };// lista dozwolonych enpointów dla niezalogowanych
 
     @Bean
@@ -39,7 +41,8 @@ public class SecurityConfig {
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // No sessions
                 )
-                .addFilterBefore(authfilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
+                .addFilterBefore(authfilter, UsernamePasswordAuthenticationFilter.class)// Add JWT filter
+                .cors(Customizer.withDefaults());
 
         return http.build();
     }
