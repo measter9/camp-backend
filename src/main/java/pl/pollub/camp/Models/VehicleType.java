@@ -12,8 +12,8 @@ public class VehicleType {
     @Id
     @GeneratedValue
     private int id;
-    private String Description;
-    private String Name;
+    private String description;
+    private String name;
     private Integer vehicleId;
 
 }

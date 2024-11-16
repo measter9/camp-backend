@@ -21,6 +21,8 @@ public class Orders {
     @Setter
     private String comment;
     @Setter
+    private Double totalCost;
+    @Setter
     @ManyToOne
     private Users user;
     @Setter

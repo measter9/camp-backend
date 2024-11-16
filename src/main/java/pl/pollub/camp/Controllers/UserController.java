@@ -1,6 +1,8 @@
 package pl.pollub.camp.Controllers;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 import pl.pollub.camp.Models.Role;
 import pl.pollub.camp.Repositories.UserRepository;
 import pl.pollub.camp.Models.Users;
@@ -24,6 +27,7 @@ import java.util.SimpleTimeZone;
 
 @Controller
 @RequestMapping(path = "/user")
+@CrossOrigin
 public class UserController {
     @Autowired
     private UserRepository userRepository;
@@ -58,6 +62,7 @@ public class UserController {
         userRepository.deleteById(id);
         return "User succesfully deleted";
     }
+
     @PatchMapping(path = "/update")
     public @ResponseBody String updateUser(@RequestParam(required = false) String name, @RequestParam int id){
         Users u = userRepository.findById(id).orElse(null);
@@ -67,5 +72,16 @@ public class UserController {
             return u.getName();
         }
         return "User not found";
+    }
+
+    @GetMapping("/block/{id}")
+    public @ResponseBody String blockUser(@PathVariable int id) {
+        Optional<Users> u = userRepository.findById(id);
+        if (u.isPresent()) {
+            u.get().setAcive(!u.get().isAcive());
+            userRepository.save(u.get());
+            return "Success";
+        }
+        throw new EntityNotFoundException("user not found");
     }
 }

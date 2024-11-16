@@ -14,6 +14,7 @@ import pl.pollub.camp.Services.InspectionService;
 @RestController
 @RequestMapping("/inspection")
 @RequiredArgsConstructor
+@CrossOrigin
 public class InspectionController {
     private final InspectionService inspectionService;
     @Autowired
@@ -40,4 +41,6 @@ public class InspectionController {
         Inspections updatedInspection = inspectionService.updateInspection(id, inspectionRequest);
         return ResponseEntity.ok(updatedInspection);
     }
+
+
 }

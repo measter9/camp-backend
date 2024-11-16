@@ -22,6 +22,8 @@ public class Inspections {
     @Setter
     private Date ValidUntil;
     @Setter
+    private Date startDate;
+    @Setter
     @ManyToOne
     private Vehicles vehicle;
 }
