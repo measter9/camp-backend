@@ -38,5 +38,13 @@ public class ReservationController {
     public @ResponseBody Iterable<Vehicles> showAvailableVehicles(@RequestBody FilterVehiclesRequset filterVehiclesRequset){
         return reservationService.showAvailableCampers(filterVehiclesRequset);
     }
+    @GetMapping(path = "/{id}")
+    public @ResponseBody Iterable<Reservations> showUserReservations(@PathVariable int id){
+        return reservationService.showUserReservations(id);
+    }
+    @DeleteMapping(path = "/{id}")
+    public @ResponseBody String deleteReservation(HttpServletRequest httpServletRequest, @PathVariable int id){
+        return reservationService.removeReservation(httpServletRequest,id);
+    }
 }
 

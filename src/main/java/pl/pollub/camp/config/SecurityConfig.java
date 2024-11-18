@@ -27,7 +27,7 @@ public class SecurityConfig {
             "/auth/**",
             "/reservation/find",
             "/vehicle/all",
-            "/vehicle/0"
+            "/vehicle/**"
     };// lista dozwolonych enpointów dla niezalogowanych
 
     @Bean

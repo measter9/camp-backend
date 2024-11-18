@@ -31,7 +31,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println(request.getServletPath());
+        System.out.println("["+request.getMethod()+"]: "+ request.getServletPath());
         if (request.getServletPath().contains("/auth/login")) {
             filterChain.doFilter(request, response);
             return;
@@ -66,6 +66,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         assert u != null;
         request.setAttribute("Role",u.getRole());
         request.setAttribute("Username",u.getName());
+        request.setAttribute("Email",u.getEmail());
 
         filterChain.doFilter(request, response);
     }

@@ -17,6 +17,7 @@ public class Vehicles {
     private String Description;
     private VehicleStatus vehicleStatus;
     private String Comment;
+    private String imageLink;
     @OneToOne
     private VehicleType vehicleType;
 }

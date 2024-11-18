@@ -22,6 +22,10 @@ public class Users {
     private String email;
     @Setter @NonNull @JsonIgnore
     private String password;
+    @Setter @NonNull
+    private String phone;
+    @Setter @NonNull
+    private String address;
     @Setter @Getter
     private Role role = Role.CUSTOMER;
     @Setter

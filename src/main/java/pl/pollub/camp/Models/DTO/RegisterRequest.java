@@ -6,5 +6,7 @@ import lombok.Getter;
 public class RegisterRequest {
     private String email;
     private String username;
+    private String address;
+    private String phone;
     private String password;
 }

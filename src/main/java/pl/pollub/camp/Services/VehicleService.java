@@ -27,6 +27,7 @@ public class VehicleService {
         vehicle.setVehicleStatus(vehicleRequest.getVehicleStatus());
         vehicle.setComment(vehicleRequest.getComment());
         vehicle.setVehicleType(vehicleRequest.getVehicleType());
+        vehicle.setImageLink(vehicleRequest.getImageLink());
 
         vehicleRepository.save(vehicle);
         return "Vehicle added successfully";
@@ -47,6 +48,7 @@ public class VehicleService {
         vehicle.setDescription(updatedVehicleRequest.getDescription());
         vehicle.setVehicleStatus(updatedVehicleRequest.getVehicleStatus());  // Remove duplicate setting of vehicleStatus
         vehicle.setComment(updatedVehicleRequest.getComment());
+        vehicle.setImageLink(updatedVehicleRequest.getImageLink());
         if (updatedVehicleRequest.getVehicleType() != null) {
             vehicle.setVehicleType(updatedVehicleRequest.getVehicleType());
         }
