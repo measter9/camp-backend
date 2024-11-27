@@ -14,6 +14,8 @@ import pl.pollub.camp.Models.Vehicles;
 import pl.pollub.camp.Repositories.ReservationRepository;
 import pl.pollub.camp.Services.ReservationService;
 
+import java.sql.Date;
+
 @RestController
 @RequestMapping(path = "/reservation")
 @RequiredArgsConstructor
@@ -35,8 +37,9 @@ public class ReservationController {
     }
 
     @GetMapping(path = "/find")
-    public @ResponseBody Iterable<Vehicles> showAvailableVehicles(@RequestBody FilterVehiclesRequset filterVehiclesRequset){
-        return reservationService.showAvailableCampers(filterVehiclesRequset);
+    public @ResponseBody Iterable<Vehicles> showAvailableVehicles(@RequestParam Date begining, @RequestParam Date end){
+        FilterVehiclesRequset f = new FilterVehiclesRequset(begining,end  );
+        return reservationService.showAvailableCampers(f);
     }
     @GetMapping(path = "/{id}")
     public @ResponseBody Iterable<Reservations> showUserReservations(@PathVariable int id){

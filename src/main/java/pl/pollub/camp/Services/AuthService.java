@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,8 +44,15 @@ public class AuthService {
     }
 
     public String login(LoginRequest loginRequest){
+        System.out.println(loginRequest.getEmail() + " " + loginRequest.getPassword());
+        try{
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-        Users u = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        }catch (Exception e){
+            System.out.println(e);
+            return "invalid user data";
+        }
+        Users u = userRepository.findByEmail(loginRequest.getEmail()).orElse(null);
+        System.out.println(u.getEmail());
         return "{ \"token\": \""+jwtService.generateToken(u)+"\", \"id\": \""+u.getId()+"\"}";
     }
 }
