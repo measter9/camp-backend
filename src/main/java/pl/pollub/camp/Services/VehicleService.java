@@ -1,6 +1,7 @@
 package pl.pollub.camp.Services;
 
 import jakarta.persistence.EntityNotFoundException;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,9 @@ import pl.pollub.camp.Repositories.VehicleRepository;
 public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
+
     public String addVehicle(HttpServletRequest request, VehicleRequest vehicleRequest) {
         if (vehicleRequest.getVehicleType() == null) {
-
             throw new IllegalArgumentException("Vehicle type must be provided");
         }
         Vehicles vehicle = new Vehicles();

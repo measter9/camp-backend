@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.pollub.camp.Models.Vehicles;
 import pl.pollub.camp.Services.VehicleService;
+
 import pl.pollub.camp.Models.VehicleStatus;
 import pl.pollub.camp.Services.VehicleService;
 import pl.pollub.camp.Repositories.VehicleRepository;
@@ -20,9 +21,10 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     @PostMapping(path = "/add")
-    public @ResponseBody String addVehicle(HttpServletRequest httpServletRequest, @RequestBody VehicleRequest vehicleRequest) {
+    public @ResponseBody String addVehicle(@RequestBody VehicleRequest vehicleRequest) {
         try {
-            return vehicleService.addVehicle(httpServletRequest,vehicleRequest);
+            return vehicleService.addVehicle(vehicleRequest);
+
         } catch (IllegalArgumentException e) {
             return e.getMessage();
         }
@@ -51,4 +53,3 @@ public class VehicleController {
         }
     }
 }
-
