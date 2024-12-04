@@ -15,4 +15,5 @@ public class VehicleRequest {
         private String Comment;
         @OneToOne
         private VehicleType vehicleType;
+
 }

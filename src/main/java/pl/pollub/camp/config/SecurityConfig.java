@@ -24,7 +24,8 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/auth/**",
-            "/reservation/find"
+            "/reservation/find",
+            "/vehicle/all"
     };// lista dozwolonych enpointów dla niezalogowanych
 
     @Bean
