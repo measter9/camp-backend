@@ -7,6 +7,9 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.security.Timestamp;
+import java.time.LocalDateTime;
+
 @Getter
 @Entity
 public class Orders {
@@ -20,4 +23,9 @@ public class Orders {
     @Setter
     @ManyToOne
     private Users user;
+    @Setter
+    private LocalDateTime startTime;
+    @Setter
+    @ManyToOne
+    private Vehicles vehicle;
 }
