@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 import pl.pollub.camp.Models.DTO.LoginRequest;
 import pl.pollub.camp.Models.DTO.RegisterRequest;
+import pl.pollub.camp.Models.Role;
 import pl.pollub.camp.Models.Users;
 import pl.pollub.camp.Repositories.UserRepository;
 
@@ -53,6 +54,9 @@ public class AuthService {
         }
         Users u = userRepository.findByEmail(loginRequest.getEmail()).orElse(null);
         System.out.println(u.getEmail());
-        return "{ \"token\": \""+jwtService.generateToken(u)+"\", \"id\": \""+u.getId()+"\"}";
+        if(u.getRole() == Role.ADMIN || u.getRole() == Role.EMPLOYEE )
+            return "{ \"token\": \""+jwtService.generateToken(u)+"\", \"id\": \""+u.getId()+"\", \"admin\" : true}";
+        else
+            return "{ \"token\": \""+jwtService.generateToken(u)+"\", \"id\": \""+u.getId()+"\"}";
     }
 }

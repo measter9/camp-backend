@@ -1,8 +1,10 @@
 package pl.pollub.camp.Services;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,7 @@ import pl.pollub.camp.Repositories.VehicleRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @NoArgsConstructor
@@ -96,6 +99,35 @@ public class ReservationService {
             reservationRepository.delete(r);
             orderRepository.delete(r.getOrder());
             return "Success";
+        }
+
+    }
+
+    public String acceptReservation(int id) {
+        Optional<Reservations> r = reservationRepository.findById(id);
+        if(r.isPresent()){
+            Reservations rezerwacja = r.get();
+            Orders order = rezerwacja.getOrder();
+            order.setOrderStatus(OrderStatus.PAID);
+
+            orderRepository.save(order);
+            return "Sucess";
+        }else{
+            throw new EntityNotFoundException();
+        }
+
+    }
+
+    public String cancelReservation(int id) {
+        Optional<Reservations> reservationsOptional = reservationRepository.findById(id);
+        if(reservationsOptional.isPresent()){
+            Reservations r = reservationsOptional.get();
+            r.getOrder().setOrderStatus(OrderStatus.CANCELED);
+
+            orderRepository.save(r.getOrder());
+            return "Suceess";
+        }else{
+            throw new EntityNotFoundException();
         }
 
     }

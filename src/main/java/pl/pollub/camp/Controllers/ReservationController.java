@@ -49,5 +49,15 @@ public class ReservationController {
     public @ResponseBody String deleteReservation(HttpServletRequest httpServletRequest, @PathVariable int id){
         return reservationService.removeReservation(httpServletRequest,id);
     }
+
+    @GetMapping(path = "/accept/{id}")
+    public @ResponseBody String acceptReservation(@PathVariable int id){
+        return reservationService.acceptReservation(id);
+    }
+    @GetMapping(path = "/cancel/{id}")
+    public @ResponseBody String cancelReservation(@PathVariable int id){
+        return reservationService.cancelReservation(id);
+    }
+
 }
 

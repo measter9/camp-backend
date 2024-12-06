@@ -1,8 +1,6 @@
 package pl.pollub.camp.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,9 +13,12 @@ public class Prices {
     @GeneratedValue
     private int id;
     @Setter
-    private Double Price;
+    private Double price;
     @Setter
-    private Date Start;
+    private Date start;
     @Setter
-    private Date End;
+    private Date end;
+    @Setter
+    @ManyToOne
+    private VehicleType vehicleType;
 }

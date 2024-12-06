@@ -38,8 +38,8 @@ public class VehicleController {
         return vehicleService.getById(id);
     }
 
-    @DeleteMapping(path = "/delete")
-    public @ResponseBody String deleteVehicle(@RequestParam int id) {
+    @DeleteMapping(path = "/delete/{id}")
+    public @ResponseBody String deleteVehicle(@PathVariable int id) {
         try {
             return vehicleService.deleteVehicle(id);
         } catch (EntityNotFoundException e) {
@@ -47,8 +47,8 @@ public class VehicleController {
         }
     }
 
-    @PatchMapping(path = "/update")
-    public @ResponseBody String updateVehicle(@RequestParam int id, @RequestBody VehicleRequest updatedVehicleRequest) {
+    @PatchMapping(path = "/update/{id}")
+    public @ResponseBody String updateVehicle(@PathVariable int id, @RequestBody VehicleRequest updatedVehicleRequest) {
         try {
             Vehicles updatedVehicle = vehicleService.updateVehicle(id, updatedVehicleRequest);
             return "Vehicle updated: " + updatedVehicle.getName();

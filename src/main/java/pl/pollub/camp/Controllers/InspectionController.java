@@ -40,4 +40,6 @@ public class InspectionController {
         Inspections updatedInspection = inspectionService.updateInspection(id, inspectionRequest);
         return ResponseEntity.ok(updatedInspection);
     }
+
+
 }
