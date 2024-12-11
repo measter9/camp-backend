@@ -2,9 +2,7 @@ package pl.pollub.camp.Services;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import pl.pollub.camp.Models.*;
@@ -14,14 +12,12 @@ import pl.pollub.camp.Repositories.OrderRepository;
 import pl.pollub.camp.Repositories.ReservationRepository;
 import pl.pollub.camp.Repositories.UserRepository;
 import pl.pollub.camp.Repositories.VehicleRepository;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @NoArgsConstructor
-public class ReservationService {
+public class ReservationService{
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -46,10 +42,8 @@ public class ReservationService {
             r.setLocation(reservationRequest.getLocation());
             r.setOrder(o);
             r.setVehicle(v);
-
             orderRepository.save(o);
             reservationRepository.save(r);
-
             return "Success";
         }
 

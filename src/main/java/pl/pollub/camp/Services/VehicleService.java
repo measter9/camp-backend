@@ -16,7 +16,7 @@ public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    public String addVehicle(HttpServletRequest request, VehicleRequest vehicleRequest) {
+    public String addVehicle( VehicleRequest vehicleRequest) {
         if (vehicleRequest.getVehicleType() == null) {
             throw new IllegalArgumentException("Vehicle type must be provided");
         }

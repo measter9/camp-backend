@@ -14,7 +14,7 @@ import pl.pollub.camp.Services.InspectionService;
 @RestController
 @RequestMapping("/inspection")
 @RequiredArgsConstructor
-public class InspectionController {
+public class InspectionController{
     private final InspectionService inspectionService;
     @Autowired
     private InspectionRepository inspectionRepository;

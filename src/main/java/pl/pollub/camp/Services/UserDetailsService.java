@@ -9,12 +9,10 @@ import pl.pollub.camp.Repositories.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService{
     private final UserRepository userRepository;
-
-
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         return userRepository.findByName(username)
                 .map(users -> User.builder()
                         .username(users.getName())

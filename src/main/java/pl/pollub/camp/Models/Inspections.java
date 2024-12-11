@@ -11,7 +11,7 @@ import java.sql.Date;
 
 @Entity
 @Getter
-public class Inspections {
+public class Inspections{
     @Id
     @GeneratedValue
     private int Id;

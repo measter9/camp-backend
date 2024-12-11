@@ -10,7 +10,7 @@ import java.sql.Date;
 
 @Entity
 @Getter
-public class Prices {
+public class Prices{
     @Id
     @GeneratedValue
     private int id;

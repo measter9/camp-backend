@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Getter
-public class Services {
+public class Services{
     @Id
     @GeneratedValue
     private int Id;

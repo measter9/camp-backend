@@ -8,12 +8,11 @@ import java.util.List;
 
 @Entity
 @Getter@Setter
-public class VehicleType {
+public class VehicleType{
     @Id
     @GeneratedValue
     private int id;
     private String Description;
     private String Name;
     private Integer vehicleId;
-
 }

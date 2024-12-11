@@ -1,16 +1,11 @@
 package pl.pollub.camp.Controllers;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.pollub.camp.Models.Vehicles;
 import pl.pollub.camp.Services.VehicleService;
-
-import pl.pollub.camp.Models.VehicleStatus;
-import pl.pollub.camp.Services.VehicleService;
-import pl.pollub.camp.Repositories.VehicleRepository;
 import pl.pollub.camp.Models.DTO.VehicleRequest;
 
 @Controller

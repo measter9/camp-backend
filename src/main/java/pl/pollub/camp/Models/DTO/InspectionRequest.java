@@ -11,7 +11,7 @@ import java.sql.Date;
 
 @Getter
 @Setter
-public class InspectionRequest {
+public class InspectionRequest{
     @NotBlank
     private String name;
     @NotNull
