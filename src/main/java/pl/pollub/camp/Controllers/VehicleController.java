@@ -23,9 +23,9 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     @PostMapping(path = "/add")
-    public @ResponseBody String addVehicle(@RequestBody VehicleRequest vehicleRequest) {
+    public @ResponseBody String addVehicle(HttpServletRequest request,@RequestBody VehicleRequest vehicleRequest) {
         try {
-            return vehicleService.addVehicle(vehicleRequest);
+            return vehicleService.addVehicle(request,vehicleRequest);
 
         } catch (IllegalArgumentException e) {
             return e.getMessage();

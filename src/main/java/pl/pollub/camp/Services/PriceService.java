@@ -3,7 +3,6 @@ package pl.pollub.camp.Services;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.pollub.camp.Models.DTO.GetPriceRequest;
 import pl.pollub.camp.Models.Prices;
 import pl.pollub.camp.Models.VehicleType;
 import pl.pollub.camp.Repositories.PriceRepository;
@@ -58,8 +57,10 @@ public class PriceService {
 
     public Prices getPrice(int vehicleTypeId, Date start, Date end){
         VehicleType vehicleType = vehicleTypeRepository.findById(vehicleTypeId).orElseThrow(EntityNotFoundException::new);
-        Prices price = priceRepository.findByVehicleTypeAndStartBetweenOrEndBetweenOrderByPriceDesc(vehicleType,start,end,start,end).get(0);
+//        Prices price = priceRepository.findByVehicleTypeAndStartBetweenAndEndBetweenOrderByPriceDesc(vehicleType,start,end,start,end).get(0);
+        Prices price = priceRepository.findPricesByVehicleTypeAndDateRange(vehicleType.getId(),start,end).get(0);
         return price;
     }
 
 }
+

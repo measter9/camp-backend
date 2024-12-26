@@ -45,7 +45,7 @@ public class ReservationService {
         if(u == null || v==null){
             return "Could not find user or vehicle";
         }
-        //calculate total cost
+        //todo calculate total cost
 //        Prices p = priceRepository.findByVehicleTypeAndStartBetweenOrEndBetweenOrderByPriceDesc(v.getVehicleType(),reservationRequest.getReservationStartDate(),reservationRequest.getReservationStartDate(),reservationRequest.getReservationStartDate(),reservationRequest.getReservationEndDate()).get(0);
 //        Double total = (reservationRequest.getReservationEndDate().getTime() - reservationRequest.getReservationStartDate().getTime()) * p.getPrice();
         for (var veh : availableVehicles){
