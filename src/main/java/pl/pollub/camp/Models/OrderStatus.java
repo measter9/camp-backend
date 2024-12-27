@@ -7,5 +7,6 @@ public enum OrderStatus{
     PENDING,
     IN_USE,
     FINISHED,
-    OTHER
+    OTHER,
+    RESIGN_REQUEST
 }

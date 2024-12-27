@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.pollub.camp.Models.DTO.DatesResponse;
 import pl.pollub.camp.Models.DTO.FilterVehiclesRequset;
 import pl.pollub.camp.Models.DTO.ReservationRequest;
 import pl.pollub.camp.Models.Orders;
@@ -45,6 +46,11 @@ public class ReservationController {
     public @ResponseBody Iterable<Reservations> showUserReservations(@PathVariable int id){
         return reservationService.showUserReservations(id);
     }
+
+    @GetMapping(path = "/vehicle/{id}")
+    public @ResponseBody Iterable<DatesResponse> showVehicleReservations(@PathVariable int id){
+        return  reservationService.getReservationsByVehicleId(id);
+    }
     @DeleteMapping(path = "/{id}")
     public @ResponseBody String deleteReservation(HttpServletRequest httpServletRequest, @PathVariable int id){
         return reservationService.removeReservation(httpServletRequest,id);
@@ -57,6 +63,11 @@ public class ReservationController {
     @GetMapping(path = "/cancel/{id}")
     public @ResponseBody String cancelReservation(@PathVariable int id){
         return reservationService.cancelReservation(id);
+    }
+
+    @GetMapping(path = "/resign/{id}")
+    public @ResponseBody String resignReservation(@PathVariable int id){
+        return reservationService.resignReservation(id);
     }
 
 }

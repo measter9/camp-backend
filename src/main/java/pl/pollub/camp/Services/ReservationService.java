@@ -4,13 +4,13 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import pl.pollub.camp.Models.*;
+import pl.pollub.camp.Models.DTO.DatesResponse;
 import pl.pollub.camp.Models.DTO.FilterVehiclesRequset;
 import pl.pollub.camp.Models.DTO.ReservationRequest;
 import pl.pollub.camp.Repositories.*;
@@ -45,16 +45,16 @@ public class ReservationService {
         if(u == null || v==null){
             return "Could not find user or vehicle";
         }
-        //todo calculate total cost
-//        Prices p = priceRepository.findByVehicleTypeAndStartBetweenOrEndBetweenOrderByPriceDesc(v.getVehicleType(),reservationRequest.getReservationStartDate(),reservationRequest.getReservationStartDate(),reservationRequest.getReservationStartDate(),reservationRequest.getReservationEndDate()).get(0);
-//        Double total = (reservationRequest.getReservationEndDate().getTime() - reservationRequest.getReservationStartDate().getTime()) * p.getPrice();
+
+        Prices p = priceRepository.findPricesByVehicleTypeAndDateRange(v.getVehicleType().getId(),reservationRequest.getReservationStartDate(),reservationRequest.getReservationEndDate()).get(0);
+        Double total = Math.round((float) (reservationRequest.getReservationEndDate().getTime() - reservationRequest.getReservationStartDate().getTime()) /(24*60*60*1000)) * p.getPrice();
         for (var veh : availableVehicles){
             if(veh.getId() == reservationRequest.getVehicleId()){
                 Orders o = new Orders();
                 o.setUser(u);
                 o.setComment(reservationRequest.getComments());
                 o.setOrderStatus(OrderStatus.PENDING);
-//                o.setTotalCost(total);
+                o.setTotalCost(total);
 
 
                 Reservations r = new Reservations();
@@ -135,5 +135,31 @@ public class ReservationService {
             throw new EntityNotFoundException();
         }
 
+    }
+
+    public Iterable<DatesResponse> getReservationsByVehicleId(int id) {
+        List<DatesResponse> res = new ArrayList<>();
+        reservationRepository.findByVehicleId(id).forEach((reservations -> {
+            res.add(new DatesResponse(reservations));
+        }));
+
+        return res;
+    }
+
+    public String resignReservation(int id) {
+        Optional<Reservations> reservationsOptional = reservationRepository.findById(id);
+        if(reservationsOptional.isPresent()){
+            Reservations r = reservationsOptional.get();
+            if(r.getOrder().getOrderStatus() == OrderStatus.PENDING){
+            r.getOrder().setOrderStatus(OrderStatus.RESIGN_REQUEST);
+
+            orderRepository.save(r.getOrder());
+            return "Suceess";}
+            else {
+                return "You can't resign now";
+            }
+        }else{
+            throw new EntityNotFoundException();
+        }
     }
 }
