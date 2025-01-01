@@ -71,6 +71,7 @@ public class RepairService {
             repair.setEndDate(repairRequest.getEndDate());
             repair.setVehicle(optionalVehicle.get());
             repair.setReservation(reservation);
+            repair.setName(repairRequest.getName());
 
             reservationRepository.save(reservation);
             repairRepository.save(repair);
@@ -83,5 +84,15 @@ public class RepairService {
 
     public Iterable<Repairs> getAllRepairs(){
         return repairRepository.findAll();
+    }
+
+    public Repairs deleteRepair(int id) {
+        Optional<Repairs> r = repairRepository.findById(id);
+        if(r.isPresent()){
+            repairRepository.delete(r.get());
+            return r.get();
+        }else{
+            throw new EntityNotFoundException("Could not find reapir with id: "+id);
+        }
     }
 }

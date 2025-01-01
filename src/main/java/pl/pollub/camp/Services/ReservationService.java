@@ -32,6 +32,8 @@ public class ReservationService {
     private VehicleRepository vehicleRepository;
     @Autowired
     private PriceRepository priceRepository;
+    @Autowired
+    private ReportRepository reportRepository;
 
     public String makeReservation(HttpServletRequest request, @RequestBody ReservationRequest reservationRequest) {
         Users u = userRepository.findByEmail((String) request.getAttribute("Email")).orElse(null);
@@ -41,13 +43,19 @@ public class ReservationService {
         System.out.println(reservationRequest.getVehicleId());
         //sprawdzdenie czy kamper jest dostępny w podanym terminie
         Iterable<Vehicles> availableVehicles =  showAvailableCampers(new FilterVehiclesRequset(reservationRequest.getReservationStartDate(),reservationRequest.getReservationEndDate()));
-
+        Double total = 0.0;
         if(u == null || v==null){
             return "Could not find user or vehicle";
         }
-
-        Prices p = priceRepository.findPricesByVehicleTypeAndDateRange(v.getVehicleType().getId(),reservationRequest.getReservationStartDate(),reservationRequest.getReservationEndDate()).get(0);
-        Double total = Math.round((float) (reservationRequest.getReservationEndDate().getTime() - reservationRequest.getReservationStartDate().getTime()) /(24*60*60*1000)) * p.getPrice();
+        if(u.isAcive() == false){
+            return "You can't make reservations";
+        }
+        try {
+            Prices p = priceRepository.findPricesByVehicleTypeAndDateRange(v.getVehicleType().getId(), reservationRequest.getReservationStartDate(), reservationRequest.getReservationEndDate()).get(0);
+            total = Math.round((float) (reservationRequest.getReservationEndDate().getTime() - reservationRequest.getReservationStartDate().getTime()) / (24 * 60 * 60 * 1000)) * p.getPrice();
+        }catch (IndexOutOfBoundsException e){
+            return "Price is not available";
+        }
         for (var veh : availableVehicles){
             if(veh.getId() == reservationRequest.getVehicleId()){
                 Orders o = new Orders();
@@ -94,13 +102,15 @@ public class ReservationService {
 
     public String removeReservation(HttpServletRequest httpServletRequest, int id) {
         Reservations r = reservationRepository.findById(id).orElse(null);
-        if (r == null
+        Iterable<Reports> reports = reportRepository.findByReservationId(id);
+        if (r == null || reports == null
 //                r.getOrder().getUser().getEmail() == httpServletRequest.getAttribute("email") ||
 //                httpServletRequest.getAttribute("Role") == Role.ADMIN
                 )
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } else {
+            reportRepository.deleteAll(reports);
             reservationRepository.delete(r);
             orderRepository.delete(r.getOrder());
             return "Success";

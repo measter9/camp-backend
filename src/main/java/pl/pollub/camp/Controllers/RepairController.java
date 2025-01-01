@@ -27,4 +27,9 @@ public class RepairController {
     private @ResponseBody Repairs updateRepair(@PathVariable int id, @RequestBody RepairRequest repairRequest){
         return repairService.updateRepair(id,repairRequest);
     }
+    @DeleteMapping(path = "/{id}")
+    private @ResponseBody Repairs deleteRepair(@PathVariable int id){
+        return repairService.deleteRepair(id);
+    }
+
 }

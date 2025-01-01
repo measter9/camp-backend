@@ -36,7 +36,7 @@ public class InspectionController {
         return ResponseEntity.ok(result);
     }
 
-    @PatchMapping("/update")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<Inspections> updateInspection(@PathVariable int id, @RequestBody InspectionRequest inspectionRequest) {
         Inspections updatedInspection = inspectionService.updateInspection(id, inspectionRequest);
         return ResponseEntity.ok(updatedInspection);
