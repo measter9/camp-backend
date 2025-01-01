@@ -31,7 +31,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("[" + request.getMethod() + "]: " + request.getServletPath());
 
-        if (request.getServletPath().contains("/auth/login")) {
+        if (request.getServletPath().contains("/auth/login") || request.getServletPath().contains("/reservation/vehicle/")) {
             filterChain.doFilter(request, response);
             return;
         } // nie weryfikuje JWT dla /auth/login

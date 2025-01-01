@@ -29,8 +29,15 @@ public class SecurityConfig {
             "/reservation/find",
             "/vehicle/all",
             "/vehicle/id/**",
+            "/reservation/vehicle/**",
             "/prices/find"
     };// lista dozwolonych enpointów dla niezalogowanych
+
+    private static final String[] CLIENT_ENDPONTS = {
+            "/reservation",
+            "/reservation/**",
+            "/reservation/resign/**"
+    };
 
     private static final String[] ADMIN_ENDPOINTS = {
             "/vehicle/delete/**",
@@ -46,18 +53,19 @@ public class SecurityConfig {
             "/prices/all",
             "/princes/delete",
             "/order/**",
-            "/inspection/**"
+            "/inspection/**",
     };//  lista endpointów dla admina
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(admin -> admin
-                        .requestMatchers(ADMIN_ENDPOINTS).hasRole(Role.ADMIN.toString()))
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(CLIENT_ENDPONTS).hasAnyRole(Role.CUSTOMER.toString(), Role.EMPLOYEE.toString(),Role.ADMIN.toString())
+                        .requestMatchers("/**").hasAnyRole(Role.ADMIN.toString())
                 )
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // No sessions
