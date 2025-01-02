@@ -50,12 +50,8 @@ public class UserController {
     }
 
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<Users> getAllUsers(HttpServletRequest request){
-        if(request.getAttribute("Role") == Role.ADMIN)
+    public @ResponseBody Iterable<Users> getAllUsers(){
             return userRepository.findAll();
-
-        return null;
-
     }
     @DeleteMapping(path = "/delete")
     public @ResponseBody String deleteUser(@RequestParam int id){

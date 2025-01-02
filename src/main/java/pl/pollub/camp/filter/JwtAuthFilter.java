@@ -26,12 +26,21 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
 
+    private static final String[] WHITELIST = {
+            "/reservation/vehicle",
+            "/auth/login",
+            "/location/all"
+    };
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("[" + request.getMethod() + "]: " + request.getServletPath());
 
-        if (request.getServletPath().contains("/auth/login") || request.getServletPath().contains("/reservation/vehicle/")) {
+        if (request.getServletPath().contains("/auth/login") ||
+                request.getServletPath().contains("/reservation/vehicle/") ||
+                request.getServletPath().contains("/location/all"))
+        {
             filterChain.doFilter(request, response);
             return;
         } // nie weryfikuje JWT dla /auth/login

@@ -30,21 +30,22 @@ public class SecurityConfig {
             "/vehicle/all",
             "/vehicle/id/**",
             "/reservation/vehicle/**",
-            "/prices/find"
+            "/prices/find",
+            "/location/all"
     };// lista dozwolonych enpointów dla niezalogowanych
 
     private static final String[] CLIENT_ENDPONTS = {
             "/reservation",
             "/reservation/**",
-            "/reservation/resign/**"
+            "/reservation/resign/**",
+            "/location/all"
     };
 
-    private static final String[] ADMIN_ENDPOINTS = {
-            "/vehicle/delete/**",
+    private static final String[] EMPLOYEE_ENDPOINTS = {
             "/vehicle/add",
             "/vehicle/update/**",
             "/vehicle-type/**",
-            "/user/**",
+            "/user/all",
             "/reservation/all",
             "/reservation/cancel/**",
             "/reservation/accept/**",
@@ -54,6 +55,11 @@ public class SecurityConfig {
             "/princes/delete",
             "/order/**",
             "/inspection/**",
+            "/location/all",
+            "/reports",
+            "/reports/**",
+            "/repairs",
+            "/repairs/**"
     };//  lista endpointów dla admina
 
 
@@ -65,6 +71,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers(CLIENT_ENDPONTS).hasAnyRole(Role.CUSTOMER.toString(), Role.EMPLOYEE.toString(),Role.ADMIN.toString())
+                        .requestMatchers(EMPLOYEE_ENDPOINTS).hasAnyRole(Role.EMPLOYEE.toString(), Role.ADMIN.toString())
                         .requestMatchers("/**").hasAnyRole(Role.ADMIN.toString())
                 )
                 .sessionManagement(sess -> sess

@@ -29,7 +29,7 @@ public class Users {
     @Setter @Getter
     private Role role = Role.CUSTOMER;
     @Setter @Getter
-    private boolean isAcive;
+    private boolean isAcive = true;
     @Setter
     @OneToMany
     List<Orders> ordersList;
