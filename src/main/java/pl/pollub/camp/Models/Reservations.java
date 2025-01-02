@@ -18,7 +18,8 @@ public class Reservations {
     @Setter
     private Date end;
     @Setter
-    private String location;
+    @ManyToOne
+    private Location location;
     @Setter
     @OneToOne
     private Orders order;

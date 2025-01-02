@@ -34,10 +34,13 @@ public class ReservationService {
     private PriceRepository priceRepository;
     @Autowired
     private ReportRepository reportRepository;
+    @Autowired
+    private LocationRepository locationRepository;
 
     public String makeReservation(HttpServletRequest request, @RequestBody ReservationRequest reservationRequest) {
         Users u = userRepository.findByEmail((String) request.getAttribute("Email")).orElse(null);
         Vehicles v = vehicleRepository.findById(reservationRequest.getVehicleId()).orElse(null);
+        Optional<Location> l = locationRepository.findByCity(reservationRequest.getLocation());
         System.out.println(v);
         System.out.println(u);
         System.out.println(reservationRequest.getVehicleId());
@@ -49,6 +52,9 @@ public class ReservationService {
         }
         if(u.isAcive() == false){
             return "You can't make reservations";
+        }
+        if(l.isEmpty()){
+            return "Invalid Location";
         }
         try {
             Prices p = priceRepository.findPricesByVehicleTypeAndDateRange(v.getVehicleType().getId(), reservationRequest.getReservationStartDate(), reservationRequest.getReservationEndDate()).get(0);
@@ -68,7 +74,7 @@ public class ReservationService {
                 Reservations r = new Reservations();
                 r.setStart(reservationRequest.getReservationStartDate());
                 r.setEnd(reservationRequest.getReservationEndDate());
-                r.setLocation(reservationRequest.getLocation());
+                r.setLocation(l.get());
                 r.setOrder(o);
                 r.setVehicle(v);
 
